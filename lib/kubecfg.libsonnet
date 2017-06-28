@@ -9,6 +9,9 @@
   // element.
   parseYaml:: std.native("parseYaml"),
 
+  // unparseYaml(obj): serialise obj as a YAML string.
+  unparseYaml:: std.native("unparseYaml"),
+
   // resolveImage(image): convert the docker image string from
   // image:tag into a more specific image@digest, depending on kubecfg
   // command line flags.

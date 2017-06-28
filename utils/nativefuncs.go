@@ -6,6 +6,7 @@ import (
 	"io"
 
 	jsonnet "github.com/strickyak/jsonnet_cgo"
+	goyaml "gopkg.in/yaml.v2"
 	"k8s.io/client-go/pkg/util/yaml"
 )
 
@@ -43,6 +44,10 @@ func RegisterNativeFuncs(vm *jsonnet.VM, resolver Resolver) {
 			ret = append(ret, doc)
 		}
 		return ret, nil
+	})
+
+	vm.NativeCallback("unparseYaml", []string{"data"}, func(in interface{}) ([]byte, error) {
+		return goyaml.Marshal(in)
 	})
 
 	vm.NativeCallback("resolveImage", []string{"image"}, func(image string) (string, error) {
