@@ -23,11 +23,15 @@ GOFMT = gofmt
 JSONNET_FILES = lib/kubecfg_test.jsonnet examples/guestbook.jsonnet
 # TODO: Simplify this once ./... ignores ./vendor
 GO_PACKAGES = ./cmd/... ./utils/...
+DOCKER_REPO ?= ksonnet/kubecfg
 
 all: kubecfg
 
 kubecfg:
 	$(GO) build $(GO_FLAGS) .
+
+docker-image: Dockerfile kubecfg
+	docker build -t $(DOCKER_REPO):$(shell git rev-parse --short HEAD) ./
 
 test: gotest jsonnettest
 

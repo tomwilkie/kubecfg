@@ -1,0 +1,11 @@
+ version: 2
+ jobs:
+   build:
+     working_directory: /go/src/github.com/ksonnet/kubecfg
+     docker:
+       - image: circleci/golang:1.8
+     steps:
+       - checkout
+       - setup_remote_docker
+       - run: make docker-image
+       - run: docker push ${DOCKER_REPO}:$(shell git rev-parse --short HEAD)
